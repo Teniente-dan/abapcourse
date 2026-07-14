@@ -7,9 +7,10 @@
 *&---------------------------------------------------------------------*
 REPORT zkit_pgmm.
 
-DATA: name_var              TYPE string,
-      zip_code_var          TYPE string,
-      balance_sheet_var     TYPE i,
+DATA:
+*      name_var              TYPE string,
+*      zip_code_var          TYPE string,
+*      balance_sheet_var     TYPE i,
       curr_var              TYPE string,
       balance_sheet_usd_var TYPE i,
       indiceusd             TYPE i.
@@ -71,9 +72,10 @@ LOOP AT pgg_mm INTO estpgg_mm.
   IF balance_sheet_usd_var >= '20000' OR indiceusd >= 50.
     EXIT.
   ENDIF.
+  DATA bono_i TYPE i.
   IF estpgg_mm-total >= '1000'.
 ** esta pendiente
-    estpgg_mm-bono = ( estpgg_mm-total / '1000' ) * '100'.
+    estpgg_mm-bono = round( val = estpgg_mm-total / '1000' dec = 0 mode = cl_abap_math=>round_down ) * '100'.
 ** balance_sheet_usd_var = ( estpgg_mm-total / '1000' ) * '100'. >>> se debe de cambiar el nombre de lavaribale
 ** por "estpgg_mm-bono"
     indiceusd = indiceusd + '1'.
@@ -98,4 +100,5 @@ cl_demo_output=>display( nuv_tabcol ).
 *balance_sheet
 *curr
 
-WRITE: 'PG_MM'.
+WRITE:/ 'Total partners:', indiceusd.
+WRITE:/ 'Total bonos:', balance_sheet_usd_var.
