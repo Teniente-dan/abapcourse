@@ -75,7 +75,8 @@ LOOP AT pgg_mm INTO estpgg_mm.
   DATA bono_i TYPE i.
   IF estpgg_mm-total >= '1000'.
 ** esta pendiente
-    estpgg_mm-bono = round( val = estpgg_mm-total / '1000' dec = 0 mode = cl_abap_math=>round_down ) * '100'.
+  estpgg_mm-bono = trunc( estpgg_mm-total / 1000 ) * 100.
+*  estpgg_mm-bono = round( val = estpgg_mm-total / '1000' dec = 0 mode = cl_abap_math=>round_down ) * '100'.
 ** balance_sheet_usd_var = ( estpgg_mm-total / '1000' ) * '100'. >>> se debe de cambiar el nombre de lavaribale
 ** por "estpgg_mm-bono"
     indiceusd = indiceusd + '1'.
